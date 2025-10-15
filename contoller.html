@@ -76,6 +76,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Beritas;
 use App\Models\Eskuls;
+use App\Models\Galeris;
 use App\Models\Guru;
 use App\Models\Identitas;
 use App\Models\Jurusans;
@@ -83,7 +84,7 @@ use App\Models\Profils;
 use App\Models\Rombels;
 use App\Models\Sarpras;
 use App\Models\Settings;
-use App\Models\Siswa;
+use App\Models\Siswas;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -94,89 +95,71 @@ class UserController extends Controller
         $jml_jurusan = Jurusans::count();
         $jml_eskul = Eskuls::count();
         $jml_rombel = Rombels::count();
-        $guru = Guru::get();
-        $berita = Beritas::get();
-        $setting = Settings::get();
-        $profil = Profils::first()->get(); 
+        $berita = Beritas::all();
+        $setting = Settings::all();
+        $profil = Profils::all();
         $eskul = Eskuls::all();
         $jurusan = Jurusans::all();
         $rombel = Rombels::all();
-        $sarpras = Sarpras::all();
-        $siswa = Siswa::all();
-        $identitas = Identitas::first();
+        $siswa = Siswas::all();
 
-        return view('welcome', compact('identitas','siswa','jml_rombel','jml_eskul','jml_jurusan','jml_guru','guru','berita','setting','profil','eskul','jurusan','rombel','sarpras'));
+        return view('beranda', compact('siswa', 'jml_rombel', 'jml_eskul', 'jml_jurusan', 'jml_guru', 'berita', 'setting', 'profil', 'eskul', 'jurusan', 'rombel'));
     }
 
     public function profilIndex()
     {
-        $profil = Profils::first()->get();
-        $eskul = Eskuls::all();
-        $jurusan = Jurusans::all();
-        $rombel = Rombels::all();
-        $sarpras = Sarpras::all();
-        $identitas = Identitas::first();
+        $profil = Profils::all();
+        $setting = Settings::all();
+        $identitas = Identitas::all();
 
-
-        return view('profil', compact('identitas','profil','eskul','jurusan','rombel','sarpras'));
+        return view('profil', compact('identitas', 'profil', 'setting'));
     }
 
     public function eskulIndex()
     {
-        $profil = Profils::first()->get();
+        $setting = Settings::all();
         $eskul = Eskuls::all();
-        $jurusan = Jurusans::all();
-        $rombel = Rombels::all();
-        $sarpras = Sarpras::all();
 
-        return view('eskul', compact('profil','eskul','jurusan','rombel','sarpras'));
+        return view('eskul', compact('eskul', 'setting'));
     }
 
     public function jurusanIndex()
     {
-        $profil = Profils::first()->get();
-        $eskul = Eskuls::all();
+        $setting = Settings::all();
         $jurusan = Jurusans::all();
-        $rombel = Rombels::all();
-        $sarpras = Sarpras::all();
 
-        return view('jurusan', compact('profil','eskul','jurusan','rombel','sarpras'));
+        return view('jurusan', compact('setting', 'jurusan'));
+    }
+    public function galeriIndex()
+    {
+        $setting = Settings::all();
+        $galeri = Galeris::all();
+
+        return view('galeri', compact('setting', 'galeri'));
     }
 
     public function rombelIndex()
     {
-        $profil = Profils::first()->get();
-        $eskul = Eskuls::all();
-        $jurusan = Jurusans::all();
-        $rombel = Rombels::all();
-        $sarpras = Sarpras::all();
-        $rombels = Rombels::all()->groupBy('jurusan'); // Group by field 'jurusan'
+        $setting = Settings::all();
+        $rombels = Rombels::all()->groupBy('jurusan');
 
-        return view('rombel', compact('rombels','profil','eskul','jurusan','rombel','sarpras'));
+        return view('rombel', compact('rombels', 'setting' ));
     }
 
     public function sarprasIndex()
     {
-        $profil = Profils::first()->get();
-        $eskul = Eskuls::all();
-        $jurusan = Jurusans::all();
-        $rombel = Rombels::all();
-        $sarpras = Sarpras::all();
-        $sarpras = Sarpras::all()->groupBy('jenis'); // Group by field 'jurusan'
+        $setting = Settings::all();
+        $sarpras = Sarpras::all()->groupBy('jenis');
 
-        return view('sarpras', compact('sarpras','profil','eskul','jurusan','rombel','sarpras'));
+        return view('sarpras', compact('sarpras', 'setting'));
     }
     public function guruIndex()
     {
-        $profil = Profils::first()->get();
-        $eskul = Eskuls::all();
-        $guru = Guru::all();
-        $jurusan = Jurusans::all();
-        $rombel = Rombels::all();
-        $sarpras = Sarpras::all();
-        $sarpras = Sarpras::all()->groupBy('jenis'); // Group by field 'jurusan'
-        $gurus = Guru::all()->groupBy('jabatan'); // Group by field 'jurusan'
+        $setting = Settings::all();
+        $gurus = Guru::all()->groupBy('jabatan');
 
-        return view('guru', compact('gurus','guru','sarpras','profil','eskul','jurusan','rombel','sarpras'));
+        return view('guru', compact('gurus', 'setting'));
     }
-} -->
+
+}
+ -->
